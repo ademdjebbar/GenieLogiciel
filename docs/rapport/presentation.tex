@@ -1,0 +1,468 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+\usetheme{default}
+\useinnertheme{rounded}
+
+% Couleurs
+\definecolor{primary}{HTML}{0F172A}
+\definecolor{secondary}{HTML}{1E40AF}
+\definecolor{accent}{HTML}{6366F1}
+\definecolor{success}{HTML}{059669}
+\definecolor{warning}{HTML}{D97706}
+\definecolor{danger}{HTML}{DC2626}
+\definecolor{light}{HTML}{F1F5F9}
+\definecolor{muted}{HTML}{64748B}
+
+\setbeamercolor{structure}{fg=secondary}
+\setbeamercolor{frametitle}{bg=primary, fg=white}
+\setbeamercolor{block title}{bg=secondary, fg=white}
+\setbeamercolor{block body}{bg=secondary!5, fg=primary}
+\setbeamercolor{block title alerted}{bg=danger, fg=white}
+\setbeamercolor{block body alerted}{bg=danger!5, fg=primary}
+\setbeamercolor{block title example}{bg=success, fg=white}
+\setbeamercolor{block body example}{bg=success!5, fg=primary}
+\setbeamercolor{itemize item}{fg=accent}
+\setbeamercolor{enumerate item}{fg=accent}
+\setbeamercolor{normal text}{fg=primary}
+
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\setbeamertemplate{itemize item}{\small\raise0.5pt\hbox{\textbullet}}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox to \paperwidth{%
+    \hspace*{2ex}\footnotesize\textcolor{muted}{Priora — Groupe Y}%
+    \hfill%
+    \footnotesize\textcolor{muted}{\insertframenumber{} / \inserttotalframenumber}%
+    \hspace*{2ex}%
+  }\vskip2pt%
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,shadows.blur}
+\usepackage{colortbl}
+\usepackage{tabularx}
+
+\title{Priora}
+\author[Groupe Y]{Adem DJEBBAR \and Nabil MOUSSAOUI \and Amir HADROUG \and Samy KHELLAF}
+
+\begin{document}
+
+% ===== TITRE =====
+{
+\setbeamercolor{background canvas}{bg=primary}
+\begin{frame}[plain]
+\vfill
+\begin{center}
+{\Huge\bfseries\textcolor{white}{Priora}}\par
+\vspace{0.2cm}
+{\normalsize\textcolor{accent!70!white}{Application de Gestion de Tâches avec Priorisation par IA}}\par
+\vspace{0.7cm}
+\textcolor{muted}{\rule{5cm}{0.3pt}}\par
+\vspace{0.5cm}
+{\small\textcolor{light}{Adem DJEBBAR \quad\textcolor{muted}{|}\quad Nabil MOUSSAOUI \quad\textcolor{muted}{|}\quad Amir HADROUG \quad\textcolor{muted}{|}\quad Samy KHELLAF}}\par
+\vspace{0.5cm}
+\begin{tikzpicture}
+\node[rounded corners=3pt, fill=secondary, inner sep=5pt, font=\footnotesize\bfseries, text=white] {L3 Informatique — Génie Logiciel — Groupe Y};
+\end{tikzpicture}\par
+\vspace{0.2cm}
+{\scriptsize\textcolor{muted}{Année universitaire 2025--2026}}
+\end{center}
+\vfill
+\end{frame}
+}
+
+% ===== SOMMAIRE =====
+\begin{frame}{Sommaire}
+\tableofcontents
+\end{frame}
+
+% ================================================================
+\section{Présentation du projet}
+% ================================================================
+
+\begin{frame}{Contexte et Problématique}
+\begin{block}{Constat}
+\small Les étudiants ont du mal à organiser leur travail au quotidien. Les applis de to-do classiques se contentent de lister les tâches sans aider à décider quoi faire en premier.
+\end{block}
+\vspace{0.3cm}
+\textbf{\textcolor{secondary}{Notre idée :}} une application web qui utilise l'\textbf{IA} pour aider activement l'utilisateur :
+\vspace{0.2cm}
+\begin{itemize}
+    \item Classer automatiquement les tâches par urgence et importance
+    \item Conseils personnalisés basés sur les habitudes
+    \item Planning journalier optimisé, adapté aux horaires
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fonctionnalités — Utilisateurs et Tâches}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Gestion des utilisateurs}
+\small
+\begin{itemize}
+    \item Inscription avec mot de passe chiffré
+    \item Connexion par token JWT
+    \item Personnalisation des horaires et préférences
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Gestion des tâches}
+\small
+\begin{itemize}
+    \item Créer, modifier, supprimer des tâches
+    \item Catégories : travail, études, personnel, autre
+    \item Statuts : en attente, en cours, terminé
+    \item Filtrer et trier
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Fonctionnalités — IA et Notifications}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{alertedblock}{Intelligence Artificielle}
+\small
+\begin{itemize}
+    \item Priorisation selon la matrice d'Eisenhower
+    \item Génération d'un planning journalier
+    \item Analyse des habitudes et conseils
+\end{itemize}
+\end{alertedblock}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Notifications et alertes}
+\small
+\begin{itemize}
+    \item Alerte quand des tâches sont en retard
+    \item Résumé des tâches du jour
+    \item Tableau de bord avec statistiques
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ================================================================
+\section{Architecture technique}
+% ================================================================
+
+\begin{frame}{Technologies choisies}
+\small
+\begin{center}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Couche} & \textbf{Technologie} & \textbf{Pourquoi} \\
+\midrule
+Serveur & Python / FastAPI & Rapide, doc auto (Swagger) \\
+\rowcolor{light}
+Interface & React 18 / Vite & Composants, réactivité \\
+Base de données & PostgreSQL & Robuste, relationnelle \\
+\rowcolor{light}
+ORM & SQLAlchemy + Alembic & Abstraction BDD + migrations \\
+Auth & JWT + bcrypt & Sécurisé, stateless \\
+\rowcolor{light}
+IA & ChatGPT (OpenAI) & Langage naturel \\
+Design & Tailwind CSS & Utilitaire, responsive \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{Architecture générale}
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm,
+    box/.style={rectangle, thick, minimum height=1.1cm, minimum width=3.5cm, rounded corners=5pt, font=\footnotesize\bfseries, text width=3cm, align=center, blur shadow={shadow blur steps=5, shadow xshift=0.4mm, shadow yshift=-0.4mm}},
+    arrow/.style={->, very thick, rounded corners}
+]
+    \node[box, draw=secondary, fill=secondary!10, text=secondary] (frontend) {Interface\\(React)};
+    \node[box, draw=primary, fill=primary!10, text=primary, below=1.3cm of frontend] (api) {Serveur\\(FastAPI)};
+    \node[box, draw=success, fill=success!10, text=success!80!black, below left=1cm and 1.5cm of api] (db) {Base de données\\(PostgreSQL)};
+    \node[box, draw=accent, fill=accent!10, text=accent!80!black, below right=1cm and 1.5cm of api] (ai) {IA\\(ChatGPT)};
+
+    \draw[arrow, color=secondary] (frontend) -- node[right, font=\scriptsize, text=muted] {HTTP / JSON} (api);
+    \draw[arrow, color=success] (api) -- node[left, font=\scriptsize, text=muted] {lecture/écriture} (db);
+    \draw[arrow, color=accent] (api) -- node[right, font=\scriptsize, text=muted] {prompt → JSON} (ai);
+\end{tikzpicture}
+\end{center}
+\vspace{0.2cm}
+\small L'utilisateur interagit avec React. Le serveur traite les requêtes, stocke dans PostgreSQL, et consulte ChatGPT pour les recommandations IA.
+\end{frame}
+
+\begin{frame}{Architecture en couches du backend}
+\begin{center}
+\begin{tikzpicture}[
+    layer/.style={rectangle, thick, minimum height=0.9cm, minimum width=10cm, rounded corners=5pt, font=\footnotesize\bfseries, blur shadow={shadow blur steps=5, shadow xshift=0.4mm, shadow yshift=-0.4mm}},
+    arrow/.style={->, thick, color=muted}
+]
+    \node[layer, draw=secondary, fill=secondary!10, text=secondary] (routers) at (0,2.5) {Couche Routes — reçoit et répond aux requêtes};
+    \node[layer, draw=accent, fill=accent!10, text=accent!80!black] (services) at (0,1.25) {Couche Services — logique métier, IA, notifications};
+    \node[layer, draw=success, fill=success!10, text=success!80!black] (models) at (0,0) {Couche Données — modèles SQLAlchemy, validation Pydantic};
+
+    \draw[arrow] (routers) -- (services);
+    \draw[arrow] (services) -- (models);
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+\small Chaque couche a un seul rôle. On peut modifier la logique IA sans toucher aux routes, ou changer la BDD sans impacter le reste.
+\end{frame}
+
+% ================================================================
+\section{Modélisation UML}
+% ================================================================
+
+\begin{frame}{Modèle de données — 3 entités}
+\begin{columns}[T]
+\begin{column}{0.32\textwidth}
+\begin{block}{Utilisateur}
+\scriptsize
+Email, mot de passe chiffré, nom, prénom, horaires de travail. Entité centrale.
+\end{block}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{block}{Tâche}
+\scriptsize
+Titre, catégorie, priorité, statut, date limite, durée estimée. Liée à un utilisateur.
+\end{block}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{block}{Préférences}
+\scriptsize
+Catégories favorites, notifications, heure du résumé quotidien. 1 par utilisateur.
+\end{block}
+\end{column}
+\end{columns}
+\vspace{0.3cm}
+\small\textbf{\textcolor{secondary}{Relations :}}
+\begin{itemize}\small
+    \item Utilisateur → Tâche : \texttt{1} vers \texttt{0..*} (possède plusieurs tâches)
+    \item Utilisateur → Préférence : \texttt{1} vers \texttt{1} (un seul enregistrement)
+\end{itemize}
+\vspace{0.2cm}
+\small\textbf{\textcolor{secondary}{3 énumérations :}} Catégorie (travail, études, personnel, autre), Priorité (basse à critique), Statut (en attente, en cours, terminé).
+\end{frame}
+
+\begin{frame}{Diagramme de cas d'utilisation}
+\small
+\textbf{\textcolor{secondary}{2 acteurs :}} Utilisateur et ChatGPT (service externe)
+\vspace{0.2cm}
+
+\textbf{\textcolor{secondary}{16 cas d'utilisation en 5 packages :}}
+\vspace{0.1cm}
+
+\footnotesize
+\begin{tabular}{l l}
+\toprule
+\textbf{Package} & \textbf{Cas d'utilisation} \\
+\midrule
+\textcolor{secondary}{Authentification (4)} & S'inscrire, Se connecter, Profil, Se déconnecter \\
+\rowcolor{light}
+\textcolor{success}{Gestion des tâches (5)} & Créer, Modifier, Supprimer, Changer statut, Lister \\
+\textcolor{accent}{Intelligence Artificielle (3)} & Prioriser, Générer planning, Analyser habitudes \\
+\rowcolor{light}
+\textcolor{warning}{Notifications (2)} & Tâches en retard, Résumé quotidien \\
+\textcolor{danger}{Préférences (2)} & Configurer préférences, Modifier horaires \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3cm}
+\small\textbf{\textcolor{secondary}{Relations :}}
+\begin{itemize}\small
+    \item \texttt{<<include>>} (obligatoire) : Créer/Modifier/Prioriser incluent « Se connecter »
+    \item \texttt{<<extend>>} (optionnel) : Changer statut étend Lister ; Horaires étend Préférences
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Diagramme de classes}
+\small
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textbf{\textcolor{secondary}{3 entités :}}
+\begin{itemize}\footnotesize
+    \item \textbf{User} — email, mdp hashé, nom, horaires
+    \item \textbf{Task} — titre, catégorie, priorité, statut, échéance
+    \item \textbf{Preference} — catégories favorites, notifications
+\end{itemize}
+\vspace{0.2cm}
+\textbf{\textcolor{secondary}{3 services :}}
+\begin{itemize}\footnotesize
+    \item \textbf{AIService} — priorisation, planning, analyse
+    \item \textbf{AuthService} — hash mdp, JWT, auth
+    \item \textbf{NotificationService} — retard, résumé jour
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{\textcolor{secondary}{Relations :}}
+\begin{itemize}\footnotesize
+    \item User \texttt{1 → 0..*} Task (possède)
+    \item User \texttt{1 → 1} Preference (a)
+    \item Services \texttt{..>} Entités (dépendance)
+\end{itemize}
+\vspace{0.2cm}
+\textbf{\textcolor{secondary}{Visibilité :}}
+\begin{itemize}\footnotesize
+    \item \texttt{+} public (méthodes de service)
+    \item \texttt{-} privé (attributs, méthodes internes)
+\end{itemize}
+\vspace{0.2cm}
+\textbf{\textcolor{secondary}{3 enums :}}
+\footnotesize Categorie, Priorite, Statut
+\end{column}
+\end{columns}
+\end{frame}
+
+% ================================================================
+\section{Intelligence Artificielle}
+% ================================================================
+
+\begin{frame}{Le rôle de l'IA dans Priora}
+\begin{block}{Comment ça va marcher}
+\small Le serveur envoie les tâches à ChatGPT sous forme de prompt structuré. L'IA analyse et renvoie du JSON que le serveur transmet à l'interface.
+\end{block}
+\vspace{0.3cm}
+\textbf{\textcolor{secondary}{Les 3 fonctions IA :}}
+\begin{enumerate}\small
+    \item \textbf{Priorisation} — Score d'urgence 0-10 par tâche (matrice d'Eisenhower) + justification
+    \item \textbf{Planning} — Emploi du temps heure par heure adapté aux horaires et durées
+    \item \textbf{Analyse} — Taux de complétion, catégorie la plus productive, conseils concrets
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Exemple d'utilisation prévu}
+\small Scénario concret :
+\vspace{0.2cm}
+\begin{enumerate}\small
+    \item Un étudiant a 5 tâches dont 2 en retard et 1 deadline demain
+    \item Il clique sur \textbf{« Prioriser mes tâches »}
+    \item Le serveur construit un prompt et l'envoie à ChatGPT
+    \item ChatGPT renvoie : deadline demain → score 9.2, retard → 8.5, etc.
+    \item L'utilisateur voit le classement avec scores et justifications
+\end{enumerate}
+\vspace{0.3cm}
+\small\textcolor{muted}{Gestion des erreurs prévue : si le service IA est indisponible, message clair à l'utilisateur.}
+\end{frame}
+
+% ================================================================
+\section{Équipe et organisation}
+% ================================================================
+
+\begin{frame}{Les membres du groupe}
+\small
+\begin{center}
+\begin{tabular}{l l l l}
+\toprule
+\textbf{Nom} & \textbf{N° étudiant} & \textbf{Rôle} & \textbf{Responsabilités} \\
+\midrule
+Adem DJEBBAR & 12304687 & \textcolor{secondary}{Backend Auth} & Modèles, BDD, JWT \\
+\rowcolor{light}
+Nabil MOUSSAOUI & 12203479 & \textcolor{secondary}{Backend Métier} & Tâches, intégration IA \\
+Amir HADROUG & 12308871 & \textcolor{secondary}{Frontend} & Pages, composants, design \\
+\rowcolor{light}
+Samy KHELLAF & 12308991 & \textcolor{secondary}{Intégration} & Front/back, docs \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.3cm}
+Tout le monde a participé aux décisions. Réunions \textbf{mardi et jeudi midi à la BU}. Communication via \textbf{Snapchat, WhatsApp et Git}.
+\end{frame}
+
+\begin{frame}{Planning du projet (4 semaines)}
+\footnotesize
+\begin{center}
+\begin{tabular}{l l p{8cm}}
+\toprule
+\textbf{Semaine} & \textbf{Phase} & \textbf{Tâches prévues} \\
+\midrule
+\textcolor{secondary}{\textbf{Sem. 1}} & Conception & Cahier des charges, choix technos, diagrammes UML, dépôt Git \\
+\rowcolor{light}
+\textcolor{accent}{\textbf{Sem. 2}} & Fondations & BDD, modèles, auth JWT, projet React \\
+\textcolor{success}{\textbf{Sem. 3}} & Fonctionnalités & CRUD tâches, intégration ChatGPT, design Tailwind \\
+\rowcolor{light}
+\textcolor{warning}{\textbf{Sem. 4}} & Finitions & Notifications, préférences, tests, documentation, soutenance \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{Défis anticipés}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{alertedblock}{Intégration de l'IA}
+\footnotesize S'assurer que ChatGPT renvoie du JSON exploitable. Prévoir un parsing robuste.
+\end{alertedblock}
+\vspace{0.15cm}
+\begin{block}{Communication front/back}
+\footnotesize React (port 5173) et FastAPI (port 8000) sur des ports différents — config CORS.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertedblock}{Sécurité}
+\footnotesize Chiffrement des mots de passe (bcrypt) et gestion fiable des tokens JWT.
+\end{alertedblock}
+\vspace{0.15cm}
+\begin{block}{Coordination équipe}
+\footnotesize Définir les contrats d'interface (requêtes/réponses) pour avancer en parallèle.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ================================================================
+\section{Conclusion}
+% ================================================================
+
+\begin{frame}{Bilan et prochaines étapes}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{exampleblock}{Accompli}
+\small
+\begin{itemize}
+    \item Cahier des charges défini
+    \item Technos et architecture choisies
+    \item Modélisation UML complète
+    \item Équipe organisée
+    \item Dépôt Git en place
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Prochaines étapes}
+\small
+\begin{itemize}
+    \item Backend (auth, CRUD, service IA)
+    \item Frontend (pages, composants, API)
+    \item Intégration ChatGPT
+    \item Tests et soutenance finale
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ===== FIN =====
+{
+\setbeamercolor{background canvas}{bg=primary}
+\begin{frame}[plain]
+\vfill
+\begin{center}
+{\Huge\bfseries\textcolor{white}{Merci !}}\par
+\vspace{0.5cm}
+{\large\textcolor{accent!70!white}{Des questions ?}}\par
+\vspace{0.7cm}
+\textcolor{muted}{\rule{3cm}{0.3pt}}\par
+\vspace{0.3cm}
+{\footnotesize\textcolor{muted}{Groupe Y — L3 Informatique — Génie Logiciel}}
+\end{center}
+\vfill
+\end{frame}
+}
+
+\end{document}

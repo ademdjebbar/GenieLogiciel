@@ -1,0 +1,130 @@
+@startuml Diagramme de Classes - Priora
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundCorner 10
+
+skinparam class {
+  BorderColor #34495E
+  FontColor #2C3E50
+  HeaderBackgroundColor #3498DB
+  HeaderFontColor white
+  BackgroundColor #EBF5FB
+  AttributeFontColor #2C3E50
+}
+
+skinparam stereotype {
+  CBackgroundColor #E8DAEF
+  CBorderColor #8E44AD
+}
+
+skinparam enum {
+  BorderColor #27AE60
+  HeaderBackgroundColor #27AE60
+  HeaderFontColor white
+  BackgroundColor #EAFAF1
+  FontColor #2C3E50
+}
+
+skinparam arrow {
+  Color #7F8C8D
+  FontColor #7F8C8D
+}
+
+enum Categorie <<enumeration>> {
+  TRAVAIL
+  PERSONNEL
+  ETUDES
+  AUTRE
+}
+
+enum Priorite <<enumeration>> {
+  BASSE
+  MOYENNE
+  HAUTE
+  CRITIQUE
+}
+
+enum Statut <<enumeration>> {
+  EN_ATTENTE
+  EN_COURS
+  TERMINE
+}
+
+class User {
+  - id : int {PK}
+  - email : str {unique}
+  - password_hash : str
+  - nom : str
+  - prenom : str
+  - horaire_travail_debut : time
+  - horaire_travail_fin : time
+  - created_at : datetime
+  --
+  + register(data: UserCreate) : User
+  + login(email: str, password: str) : Token
+  + get_profile() : UserResponse
+}
+
+class Task {
+  - id : int {PK}
+  - user_id : int {FK}
+  - titre : str
+  - description : str
+  - categorie : Categorie
+  - priorite : Priorite
+  - statut : Statut
+  - date_echeance : datetime
+  - date_creation : datetime
+  - date_completion : datetime
+  - duree_estimee : int
+  --
+  + create(data: TaskCreate) : Task
+  + update(data: TaskUpdate) : Task
+  + delete() : void
+  + change_status(statut: Statut) : Task
+}
+
+class Preference {
+  - id : int {PK}
+  - user_id : int {FK, unique}
+  - categories_favorites : list
+  - notifications_actives : bool
+  - heure_resume_quotidien : time
+  --
+  + get() : Preference
+  + update(data: PreferenceUpdate) : Preference
+}
+
+class AIService <<service>> #F5EEF8/E8DAEF {
+  + prioritize_tasks(tasks, user) : PrioritizeResponse
+  + suggest_planning(tasks, user) : SuggestionsResponse
+  + analyze_habits(tasks, user) : AnalyseResponse
+  - _build_tasks_context(tasks) : str
+  - _call_chatgpt(system, prompt) : dict
+}
+
+class NotificationService <<service>> #FEF9E7/F9E79F {
+  + get_overdue_tasks(user_id) : List<Task>
+  + get_daily_tasks(user_id) : List<Task>
+}
+
+class AuthService <<service>> #FDEDEC/F5B7B1 {
+  + hash_password(password) : str
+  + verify_password(plain, hashed) : bool
+  + create_access_token(data) : str
+  + get_current_user(token) : User
+}
+
+User "1" -- "0..*" Task : possede >
+User "1" -- "1" Preference : a >
+Task -- Categorie
+Task -- Priorite
+Task -- Statut
+AIService ..> Task : analyse
+AIService ..> User : utilise
+NotificationService ..> Task : filtre
+AuthService ..> User : authentifie
+
+@enduml

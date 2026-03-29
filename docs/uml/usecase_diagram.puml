@@ -1,0 +1,98 @@
+@startuml Diagramme de Cas d Utilisation - Priora
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam roundCorner 10
+skinparam usecaseFontSize 11
+skinparam actorFontSize 12
+
+skinparam usecase {
+  BorderColor #34495E
+  BackgroundColor #EBF5FB
+  FontColor #2C3E50
+  ArrowColor #7F8C8D
+}
+
+skinparam actor {
+  BorderColor #2C3E50
+  FontColor #2C3E50
+}
+
+skinparam rectangle {
+  BorderColor #2C3E50
+  BackgroundColor #FDFEFE
+  FontColor #2C3E50
+}
+
+skinparam package {
+  FontColor white
+  FontStyle bold
+}
+
+left to right direction
+
+actor "Utilisateur" as User
+actor "ChatGPT (OpenAI)" as Claude <<externe>>
+
+rectangle "Priora" {
+
+  package "Authentification" #3498DB {
+    usecase "S'inscrire" as UC1 #D6EAF8
+    usecase "Se connecter" as UC2 #D6EAF8
+    usecase "Consulter son profil" as UC3 #D6EAF8
+    usecase "Se deconnecter" as UC4 #D6EAF8
+  }
+
+  package "Gestion des taches" #2ECC71 {
+    usecase "Creer une tache" as UC5 #D5F5E3
+    usecase "Modifier une tache" as UC6 #D5F5E3
+    usecase "Supprimer une tache" as UC7 #D5F5E3
+    usecase "Changer le statut\nd'une tache" as UC8 #D5F5E3
+    usecase "Lister les taches\n(avec filtres)" as UC9 #D5F5E3
+  }
+
+  package "Intelligence Artificielle" #9B59B6 {
+    usecase "Prioriser les taches\n(matrice Eisenhower)" as UC10 #E8DAEF
+    usecase "Generer un planning\njournalier optimise" as UC11 #E8DAEF
+    usecase "Analyser les habitudes\nde productivite" as UC12 #E8DAEF
+  }
+
+  package "Notifications" #E67E22 {
+    usecase "Voir les taches\nen retard" as UC13 #FDEBD0
+    usecase "Consulter le resume\nquotidien" as UC14 #FDEBD0
+  }
+
+  package "Preferences" #E74C3C {
+    usecase "Configurer les\npreferences" as UC15 #FDEDEC
+    usecase "Modifier les horaires\nde travail" as UC16 #FDEDEC
+  }
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+User --> UC12
+User --> UC13
+User --> UC14
+User --> UC15
+User --> UC16
+
+UC10 --> Claude
+UC11 --> Claude
+UC12 --> Claude
+
+UC5 ..> UC2 : <<include>>
+UC6 ..> UC2 : <<include>>
+UC10 ..> UC2 : <<include>>
+UC8 ..> UC9 : <<extend>>
+UC16 ..> UC15 : <<extend>>
+
+@enduml
