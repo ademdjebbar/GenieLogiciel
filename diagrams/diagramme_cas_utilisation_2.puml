@@ -1,0 +1,73 @@
+@startuml DiagrammeCasUtilisation_Partie2
+skinparam dpi 200
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam BackgroundColor #fef6fa
+skinparam defaultFontColor #2d1f3d
+left to right direction
+
+skinparam usecase {
+  BackgroundColor #FFFFFF
+  BorderColor #cdb4db
+  FontColor #2d1f3d
+  ArrowColor #cdb4db
+  StereotypeFontColor #a2d2ff
+}
+
+skinparam actor {
+  BorderColor #ffafcc
+  FontColor #ffafcc
+  BackgroundColor #FFFFFF
+}
+
+skinparam package {
+  BackgroundColor #fff5f9
+  BorderColor #cdb4db
+  FontColor #a2d2ff
+  FontStyle bold
+}
+
+skinparam rectangle {
+  BackgroundColor #fff5f9
+  BorderColor #a2d2ff
+  FontColor #a2d2ff
+  RoundCorner 10
+}
+
+skinparam arrow {
+  Color #cdb4db
+  FontColor #7a6188
+}
+
+title <color:#a2d2ff><b>Cas d'Utilisation (2/2)</b></color> - <color:#2d1f3d>Priora</color>\n<color:#7a6188>Intelligence Artificielle & Notifications</color>
+
+actor "Utilisateur" as user
+actor "Service IA\n(Claude API)" as ai
+
+rectangle "Priora" {
+
+  package "Intelligence Artificielle" {
+    usecase "Prioriser les taches" as UC10
+    usecase "Suggerer un planning\nquotidien" as UC11
+    usecase "Analyser les habitudes\nde productivite" as UC12
+  }
+
+  package "Notifications" {
+    usecase "Voir les taches\nen retard" as UC13
+    usecase "Voir le resume\ndu jour" as UC14
+  }
+}
+
+' --- Liens Utilisateur ---
+user --> UC10
+user --> UC11
+user --> UC12
+user --> UC13
+user --> UC14
+
+' --- Liens Service IA ---
+ai --> UC10
+ai --> UC11
+ai --> UC12
+
+@enduml

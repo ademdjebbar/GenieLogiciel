@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  name      String
+  tasks     Task[]
+  subTasks  SubTask[]
+  categories Category[]
+  createdAt DateTime   @default(now())
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  color     String   @default("#6366f1") // Violet indigo par défaut
+  icon      String   @default("folder")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  tasks     Task[]
+  createdAt DateTime @default(now())
+
+  @@unique([userId, name])
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  status      String    @default("TODO") // TODO, IN_PROGRESS, DONE
+  priority    String    @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  
+  // AI Metrics
+  isAIPriority Boolean  @default(false)
+  aiScore      Int      @default(0)
+  aiReasoning  String?
+  estimatedTime Int?    // Temps en minutes
+  
+  dueDate       DateTime?
+  categoryId    String?     @map("category_id")
+  category      Category?   @relation(fields: [categoryId], references: [id])
+  
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  subTasks    SubTask[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([userId, status])
+  @@index([userId, isAIPriority])
+}
+
+model SubTask {
+  id        String   @id @default(uuid())
+  title     String
+  completed Boolean  @default(false)
+  
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

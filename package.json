@@ -1,0 +1,12 @@
+{
+  "name": "priora-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node start-servers.js",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev"
+  },
+  "dependencies": {
+  }
+}

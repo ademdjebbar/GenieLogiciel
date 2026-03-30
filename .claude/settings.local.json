@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm:*)",
+      "Bash(npx prisma:*)",
+      "Bash(curl:*)",
+      "Bash(export:*)",
+      "Bash(ls:*)",
+      "Bash(python:*)",
+      "Bash(java:*)"
+    ]
+  }
+}
